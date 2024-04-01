@@ -2,16 +2,23 @@ import { useEffect } from "react";
 
 export const useChatSupport = () => {
   useEffect(() => {
-    var Tawk_API: any = Tawk_API || {},
-      Tawk_LoadStart = new Date();
-    (function () {
-      var s1: any = document.createElement("script"),
-        s0: any = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = "https://embed.tawk.to/6609615e1ec1082f04dd35b6/1hqaa8min";
-      s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin", "*");
-      s0.parentNode.insertBefore(s1, s0);
-    })();
-  }, []);
+    // Function to load Tidio Chat
+    const loadTidioChat = () => {
+      const tidioScript = document.createElement("script");
+      tidioScript.src = "//code.tidio.co/bmdwca2yqstcmxidfbfq4jpuwwdgoo29.js";
+      tidioScript.async = true;
+      document.body.appendChild(tidioScript);
+    };
+
+    // Load Tidio Chat when component mounts
+    loadTidioChat();
+
+    // Clean up function to remove Tidio Chat when component unmounts
+    return () => {
+      const tidioElement = document.getElementById("tidio-chat");
+      if (tidioElement) {
+        tidioElement.remove();
+      }
+    };
+  }, []); // Empty dependency array ensures this effect runs only once
 };
